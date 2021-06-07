@@ -36,7 +36,7 @@ const alfabeto = [
 ];
 let palabra = "";
 let barrasBajas = "";
-let intentos = 10;
+let intentos = 11;
 
 // Clona el elemento y sus hijos, le quita la clase y lo devuelve
 const clonarElemento = (clase) => {
@@ -53,19 +53,49 @@ const obtenerPalabraAPI = async () => {
 
   barrasBajas = palabra.replace(/[a-z]/gi, "_");
 
-  console.log(palabra.split(""));
+  console.log(`Solución super secreta: ${palabra.split("")}`);
   const palabraElemento = document.querySelector(".palabra");
+  const intentosElemento = document.querySelector(".intentos");
   palabraElemento.textContent = barrasBajas;
-
-  /*
-
-  console.log(barrasBajas.split("")); */
+  intentosElemento.textContent = `Intentos restantes : ${intentos}`;
 };
 
 const actualiarPalabra = (nuevaPalabra) => {
   const palabraElemento = document.querySelector(".palabra");
   barrasBajas = nuevaPalabra;
   palabraElemento.textContent = barrasBajas;
+};
+
+const errorIntento = () => {
+  --intentos;
+  const intentosElemento = document.querySelector(".intentos");
+  intentosElemento.textContent = `Intentos restantes : ${intentos}`;
+
+  const hangman = document.querySelector("#hangman");
+  const paso = hangman.querySelector(".off");
+  paso.classList.remove("off");
+  paso.classList.add("on");
+};
+
+const ganar = () => {
+  const resultadoElemento = document.querySelector(".resultado");
+  resultadoElemento.textContent = `OLE OLE LOS CARACOLES HAS GANADO`;
+  desactivarBotones();
+};
+
+const perder = () => {
+  const resultadoElemento = document.querySelector(".resultado");
+  resultadoElemento.textContent = `No has acertado a tiempo y Luis se ha suicidado, ahora toda su familia te culpa de lo ocurrido
+  y tu lo llevas como puedes, al cabo de un tiempo no podras con el peso en tu consiencia y serás el siguiente en ese cuadradito`;
+  desactivarBotones();
+};
+
+const desactivarBotones = () => {
+  const botones = document.querySelectorAll(".boton button");
+
+  for (const boton of botones) {
+    boton.disabled = true;
+  }
 };
 
 const printarBotones = () => {
@@ -85,9 +115,9 @@ const printarBotones = () => {
 };
 
 const comprobarAcierto = (elementoBoton, intento) => {
+  elementoBoton.disabled = true;
   if (palabra.toLowerCase().includes(intento.toLowerCase())) {
     const tempBarrasBajas = barrasBajas.split("");
-    elementoBoton.disabled = true;
 
     for (const indice in palabra) {
       if (palabra[indice].toLowerCase() === intento.toLowerCase()) {
@@ -95,9 +125,14 @@ const comprobarAcierto = (elementoBoton, intento) => {
       }
     }
     actualiarPalabra(tempBarrasBajas.join(""));
-    console.log(barrasBajas);
   } else {
-    --intentos;
+    errorIntento();
+  }
+  if (intentos === 0) {
+    perder();
+  }
+  if (!barrasBajas.includes("_")) {
+    ganar();
   }
 };
 
