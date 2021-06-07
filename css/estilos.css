@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
 svg.hangman {
   width: 18.75rem;
   height: 18.75rem;
@@ -8,4 +14,18 @@ svg > * {
   stroke-linecap: round;
   stroke-miterlimit: 10;
   transition: 0.25s;
+}
+
+.titulo {
+  margin-top: 40px;
+  font-weight: 700;
+}
+
+.boton button {
+  height: 50px;
+  width: 50px;
+}
+
+.botones .boton-dummy {
+  display: none !important;
 }
