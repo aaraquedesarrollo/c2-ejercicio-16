@@ -16,6 +16,11 @@ svg > * {
   transition: 0.25s;
 }
 
+.contenedor-hangman {
+  border: 3px solid olive;
+  display: inline-block;
+}
+
 .titulo {
   margin-top: 40px;
   font-weight: 700;
@@ -24,6 +29,13 @@ svg > * {
 .boton button {
   height: 50px;
   width: 50px;
+}
+
+.palabra {
+  font-size: 30px;
+  letter-spacing: 7px;
+  display: block;
+  margin-top: 40px;
 }
 
 .botones .boton-dummy {

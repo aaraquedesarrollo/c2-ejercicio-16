@@ -1,15 +1,6 @@
 /* PROBLEMONES
 
 - Pintar la palabra en la pagina web substituida por barras bajas
-- Pintar un boton por cada letra del abecedario
-- Hacer que al pulsar un boton, se consuma un intento y ese boton ya no se puede utilizar mas
-- Comprobar si la letra que se ha intentado coincide con alguna de la palabra y si es asi poner la letra en las barras bajas
-
-
-
-
-
-
 
 
 */
@@ -45,7 +36,7 @@ const alfabeto = [
 ];
 let palabra = "";
 let barrasBajas = "";
-const intentos = 10;
+let intentos = 10;
 
 // Clona el elemento y sus hijos, le quita la clase y lo devuelve
 const clonarElemento = (clase) => {
@@ -62,8 +53,19 @@ const obtenerPalabraAPI = async () => {
 
   barrasBajas = palabra.replace(/[a-z]/gi, "_");
 
-  console.log(palabra.split("")); /*
+  console.log(palabra.split(""));
+  const palabraElemento = document.querySelector(".palabra");
+  palabraElemento.textContent = barrasBajas;
+
+  /*
+
   console.log(barrasBajas.split("")); */
+};
+
+const actualiarPalabra = (nuevaPalabra) => {
+  const palabraElemento = document.querySelector(".palabra");
+  barrasBajas = nuevaPalabra;
+  palabraElemento.textContent = barrasBajas;
 };
 
 const printarBotones = () => {
@@ -79,6 +81,23 @@ const printarBotones = () => {
     boton.addEventListener("click", () =>
       comprobarAcierto(boton, boton.textContent)
     );
+  }
+};
+
+const comprobarAcierto = (elementoBoton, intento) => {
+  if (palabra.toLowerCase().includes(intento.toLowerCase())) {
+    const tempBarrasBajas = barrasBajas.split("");
+    elementoBoton.disabled = true;
+
+    for (const indice in palabra) {
+      if (palabra[indice].toLowerCase() === intento.toLowerCase()) {
+        tempBarrasBajas[indice] = intento;
+      }
+    }
+    actualiarPalabra(tempBarrasBajas.join(""));
+    console.log(barrasBajas);
+  } else {
+    --intentos;
   }
 };
 
