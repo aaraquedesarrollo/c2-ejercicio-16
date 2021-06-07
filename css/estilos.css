@@ -38,6 +38,24 @@ svg > * {
   margin-top: 40px;
 }
 
+.intentos {
+  font-size: 30px;
+  letter-spacing: 7px;
+}
+
+.resultado {
+  display: block;
+  font-size: 25px;
+}
+
 .botones .boton-dummy {
   display: none !important;
+}
+
+.off {
+  display: none;
+}
+
+.on {
+  display: block;
 }
